@@ -1,27 +1,24 @@
-﻿using System.Runtime.Versioning;
-using System.Security.Principal;
+﻿using RandomStudent.Models;
 
-class Student
+var students = Enumerable.Range(1, 10).Select(e => new Student()).ToArray();
+for (int i = 0; i < students.Length; ++i)
 {
-  public int ID { get; set; }
-  public string Name { get; set; }
-  public int grade { get; set; }
-  public string address { get; set; }
+    Console.WriteLine($"Điểm trung bình của học sinh thứ {i + 1}: {students[i].Grade}");
 }
+Console.WriteLine();
 
-class gen
+var threeHighest = (
+    from student in students
+    orderby student.Grade
+    select student
+).Take(3);
+
+foreach (var student in threeHighest)
 {
-  public Random getId { get; set; } = new Random();
-  public Random getGrade { get; set; } = new Random();
-  public int genId()
-  {
-    int result = getId.Next(16000000, 22999999);
-    return result;
-  }
-  public int genGrade()
-  {
-    int result = getGrade.Next(0, 10);
-    return result;
-  }
-
+    Console.WriteLine($"Thông tin của học sinh");
+    Console.WriteLine($"- Mã số sinh viên: {student.Id}");
+    Console.WriteLine($"- Họ và tên: {student.Name}");
+    Console.WriteLine($"- Điểm: {student.Grade}");
+    Console.WriteLine($"- Địa chỉ: {student.Address}");
+    Console.WriteLine();
 }
